@@ -2,6 +2,7 @@ import SearchBar from '../components/SearchBar';
 import Filters from '../components/Filters';
 import CategoryTabs from '../components/CategoryTabs';
 import ProductGrid from '../components/ProductGrid';
+import LoadingSkeleton from '../components/LoadingSkeleton';
 import useProducts from '../hooks/useProducts';
 
 export default function Products() {
@@ -20,18 +21,20 @@ export default function Products() {
     setSortBy,
   } = useProducts();
 
-  if (loading) return <p>Loading products...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <section>
       <h2>Products</h2>
+
       <SearchBar search={search} setSearch={setSearch} />
+
       <CategoryTabs
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
+
       <Filters
         categories={categories}
         selectedCategory={selectedCategory}
@@ -41,7 +44,14 @@ export default function Products() {
         sortBy={sortBy}
         setSortBy={setSortBy}
       />
-      {products.length ? <ProductGrid products={products} /> : <p>No products found.</p>}
+
+      {loading ? (
+        <LoadingSkeleton count={6} />
+      ) : products.length ? (
+        <ProductGrid products={products} />
+      ) : (
+        <p>No products found.</p>
+      )}
     </section>
   );
 }

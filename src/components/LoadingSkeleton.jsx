@@ -32,7 +32,6 @@ export default function Layout() {
         <nav className="nav-links">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/products">Products</NavLink>
-
           <NavLink to="/orders" className="icon-link nav-icon-btn">
             <FiPackage />
             <span>Orders</span>
